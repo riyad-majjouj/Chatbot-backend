@@ -40,7 +40,7 @@ app.use(express.json());
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-app.post("/ask", async (req, res) => {
+app.post("/api/ask", async (req, res) => {
     const userQuestion = req.body.question;
 
     if (!userQuestion) {
