@@ -6,8 +6,36 @@ require("dotenv").config();
 const app = express();
 const PORT = 5000;
 
-// السماح للفرونت إند بالوصول إلى السيرفر
-app.use(cors());
+// --- بداية التعديل ---
+
+// قائمة بالنطاقات المسموح لها بالوصول
+// أضف رابط الواجهة الأمامية بعد نشرها أيضاً
+const allowedOrigins = [
+    'http://localhost:8080', // للسماح بالوصول أثناء التطوير المحلي
+    // 'https://your-frontend-domain.vercel.app' // أضف رابط الفرونت إند هنا بعد رفعه
+];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        // في حالة الطلبات من نفس السيرفر (مثل Postman) أو عدم وجود origin، يتم السماح بها
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // تحديد الـ methods المسموح بها
+    allowedHeaders: ['Content-Type', 'Authorization'], // تحديد الـ headers المسموح بها
+};
+
+// استخدم إعدادات CORS المخصصة
+app.use(cors(corsOptions));
+// تأكد من أن Express يتعامل مع طلبات OPTIONS preflight بشكل صحيح
+app.options('*', cors(corsOptions));
+
+// --- نهاية التعديل ---
+
+
 app.use(express.json());
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
