@@ -12,7 +12,7 @@ const PORT = 5000;
 // أضف رابط الواجهة الأمامية بعد نشرها أيضاً
 const allowedOrigins = [
     'http://localhost:8080', // للسماح بالوصول أثناء التطوير المحلي
-    // 'https://your-frontend-domain.vercel.app' // أضف رابط الفرونت إند هنا بعد رفعه
+    'https://chat-bot-frontend-two.vercel.app' // أضف رابط الفرونت إند هنا بعد رفعه
 ];
 
 const corsOptions = {
